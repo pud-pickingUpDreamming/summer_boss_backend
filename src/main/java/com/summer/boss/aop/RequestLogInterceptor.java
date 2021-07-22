@@ -50,7 +50,7 @@ public class RequestLogInterceptor {
     private static final String LOG_FORMAT = "url:{},requestArgs:{},response:{},ip:{},location{},cost:{}";
 
     @Pointcut("!@annotation(com.summer.boss.annotations.BackendOperation) " +
-            "&& execution(public * com.william.boss.controller..*Controller.*(..))")
+            "&& execution(public * com.summer.boss.controller..*Controller.*(..))")
     public void apiLogInterceptor() {
     }
 

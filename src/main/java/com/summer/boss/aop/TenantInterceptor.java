@@ -40,7 +40,7 @@ public class TenantInterceptor {
     @Value("${tenant.service:boss}")
     private String service;
 
-    @Pointcut("execution(public * com.william.boss.controller..*Controller.*(..))")
+    @Pointcut("execution(public * com.summer.boss.controller..*Controller.*(..))")
     public void tenantInterceptor() {
     }
 

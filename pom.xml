@@ -8,10 +8,10 @@
         <version>2.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.william</groupId>
-    <artifactId>summer_boss</artifactId>
+    <groupId>com.summer</groupId>
+    <artifactId>summer_boss_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>summer_boss</name>
+    <name>summer_boss_backend</name>
     <description>a background admin system program by Spring Boot and thymeleaf </description>
 
     <properties>

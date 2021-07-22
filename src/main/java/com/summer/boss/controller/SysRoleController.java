@@ -11,6 +11,7 @@ import com.summer.boss.service.ISysRoleService;
 import com.summer.boss.service.ISysUserRoleService;
 import com.summer.boss.vo.ResponseResult;
 import com.summer.boss.vo.SimplePage;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/boss/role")
+@Api(tags = "角色配置模块")
 public class SysRoleController {
 
     @Resource
