@@ -1,0 +1,132 @@
+logging:
+  config: classpath:logback.xml
+  level:
+    com.william.boss.orm: debug
+
+server:
+  port: 8082
+
+spring:
+  application:
+    name: summer_boss
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  servlet:
+    multipart:
+      maxFileSize: 5MB
+      maxRequestSize: 50MB
+      location: /data/cms/upload
+
+  datasource:
+#    url: jdbc:postgresql://1.15.132.121:7003/summer_boss?useAffectedRows=true&currentSchema=public
+#    username: postgres
+#    password: admin
+#    driver-class-name: org.postgresql.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    dynamic:
+      primary: pgSql
+      datasource:
+        pgSql:
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://1.15.132.121:7003/summer_boss?useAffectedRows=true&currentSchema=public
+          username: postgres
+          password: admin
+    druid:
+      max-active: 100
+      validation-query: select 1
+      filters: stat, wall
+      web-stat-filter:
+        enabled: true
+        url-pattern: /druid/*
+        exclusions: "*.gif,*.png,*.jpg,*.html,*.js,*.css,*.ico,/druid/*"
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 10000
+      stat-view-servlet:
+        enabled: true
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+        url-pattern: /druid/*
+#  redis:
+          ##    database: 0
+          ##    host: 175.24.121.139
+          ##    port: 7000
+          ##    password: admin
+          ##    jedis:
+          ##      pool:
+          ##        max-active: 30  # 连接池最大连接数（使用负值表示没有限制）
+          ##        max-wait: -1  # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          ##        max-idle: 30  # 连接池中的最大空闲连接
+          ##        min-idle: 7  # 连接池中的最小空闲连接
+          ##    timeout: 6000  # 连接超时时间（毫秒）
+          ##  rabbitmq:
+          ##    host: 175.24.121.139
+          ##    port: 7001
+          ##    username: admin
+        ##    password: admin
+        ##    virtual-host: admin
+
+  main:
+    allow-bean-definition-overriding: true
+
+knife4j:
+  enable: true
+
+mybatis-plus:
+  mapperLocations: classpath:/mapper/*.xml
+  typeAliasesPackage: com.william.boss.orm.model
+  global-config:
+    db-config:
+      # 主键类型
+      idType: AUTO
+      # 增删改字段策略
+      insertStrategy: NOT_NULL
+      updateStrategy: NOT_NULL
+      # 表名是否使用驼峰转下划线命名,只对表名生效
+      tableUnderline: true
+      # 大写命名,对表名和字段名均生效
+      capitalMode: false
+      #逻辑删除配置
+      logicDeleteField: is_del
+      logicDeleteValue: 1
+      logicNotDeleteValue: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+#tenant:
+#  service: boss
+boss:
+  auth:
+    ignoreSources:
+      - html
+      - ico
+      - js
+      - css
+      - jpg
+      - swagger-resources
+      - v2
+
+    apiTokenHeader: access-token
+    expire: 7200
+
+location:
+  type: baidu # 用于区分用哪个平台的定位服务,如百度,阿里
+  serviceUrl: http://api.map.baidu.com/location/ip?ak={0}&coor=bd09ll&ip={1} # 百度定位服务接口,开发文档 https://lbsyun.baidu.com/index.php?title=webapi/ip-api
+  appKey: Y8125nlttvjMzqrK9n4mVEnNYnmccfoq   # 百度应用访问key,申请并激活百度开发者账号,创建个应用就可以获得
+
+swagger:
+  basePackage: com.william.boss
+  description: 项目接口文档url (http://localhost[:port]/doc.html)
+  globalParams:
+    - name: token
+      paramType: header
+      javaType: string
+      description: 支持 jwt token
+    - name: requestId
+      paramType: header
+      javaType: string
+      description: 请求唯一标识
